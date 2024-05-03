@@ -1,0 +1,38 @@
+<div class="container" [ngClass]="(isMinimized$ | async)! ? 'container-minimize' : '' ">
+    <div class="state">
+        @if(isMinimized$ | async) {
+            <app-icon-button icon="chevron_right" (click)="changeState()"></app-icon-button>
+        } @else {
+            <app-icon-button icon="chevron_left" (click)="changeState()"></app-icon-button>
+        }
+    </div>
+
+    <div class="header">
+        <div class="logo">
+            <div class="logo-wrapper">
+                <img src="https://i.natgeofe.com/n/4f5aaece-3300-41a4-b2a8-ed2708a0a27c/domestic-dog_thumb_square.jpg?wp=1&w=136&h=136" alt="Logo">
+            </div>
+        </div>
+        @if (!(isMinimized$ | async)) {
+            <div class="title">
+                <div>
+                    <h2>Quản lý chấm công</h2>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="menu">
+        @for (sidebarButton of sidebarButtons; track $index) {
+            <div class="button-wrapper">
+                <app-sidebar-button class="button"  
+                    [label]="sidebarButton.label" 
+                    [icon]="sidebarButton.icon" 
+                    [active]="sidebarButton.route === currentRoute"
+                    [isMinimized]="(isMinimized$ | async)!"
+                    (click)="navigateTo(sidebarButton.route)"
+                ></app-sidebar-button>
+            </div>
+        }
+    </div>
+</div>

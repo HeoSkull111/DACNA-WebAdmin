@@ -1,0 +1,6 @@
+<login-form (login)="loginUser($event)"></login-form>
+<app-notification-dialog #notificationDialog
+    [message]="(notificationMessage$ | async)!"
+    [type]="(notificationType$ | async)!"
+    [title]="(notificationTitle$ | async)!"
+></app-notification-dialog>

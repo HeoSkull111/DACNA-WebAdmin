@@ -9,20 +9,31 @@ import { LoginComponent } from './pages/login/login.component';
 import { registerRoutes } from './pages/register/register.routes';
 import { RegisterComponent } from './pages/register/register.component';
 
+import { authenticatorGuard } from './guards/authenticator.guard';
+import { isAuthenticatedGuard } from './guards/isAuthenticated.guard';
+
 export const routes: Routes = [
   {
-    path: '',
+    path: 'main',
     component: HomeComponent,
+    canActivate: [authenticatorGuard],
     children: homeRoutes,
   },
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [isAuthenticatedGuard],
     children: loginRoutes,
   },
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [isAuthenticatedGuard],
     children: registerRoutes,
+  },
+  {
+    path: '',
+    redirectTo: 'main',
+    pathMatch: 'full',
   },
 ];

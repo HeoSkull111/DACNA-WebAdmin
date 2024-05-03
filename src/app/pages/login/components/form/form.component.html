@@ -1,0 +1,33 @@
+<form [formGroup]="loginForm">
+    <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" formControlName="email">
+
+        @if (email?.errors?.['required'] && email?.touched && email?.dirty) {
+            <div class="form-field-error">Email is required</div>
+        }
+
+        @if (email?.errors?.['email'] && email?.touched && email?.dirty) {
+            <div class="form-field-error">Email is invalid</div>
+        }
+    </div>
+
+    <div class="form-field">
+        <label for="password">Password</label>
+        <input type="password" formControlName="password">
+
+        @if (password?.errors?.['required'] && password?.touched && password?.dirty) {
+            <div class="form-field-error">Password is required</div>
+        }
+
+        @if (password?.errors?.['minlength'] && password?.touched && password?.dirty) {
+            <div class="form-field-error">Password must be at least 6 characters long</div>
+        }
+
+        @if (password?.errors?.['maxlength'] && password?.touched && password?.dirty) {
+            <div class="form-field-error">Password must be at most 20 characters long</div>
+        }
+    </div>
+
+    <button (click)="submit()">Login</button>
+</form>

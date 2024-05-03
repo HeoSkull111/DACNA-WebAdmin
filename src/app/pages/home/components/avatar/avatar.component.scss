@@ -1,0 +1,61 @@
+:host {
+  display: block;
+}
+
+.avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
+  overflow: hidden;
+
+  cursor: pointer;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  $shadow-color: var(
+    --md-filled-button-container-color,
+    var(--md-sys-color-primary, #6750a4)
+  );
+
+  &:hover {
+    box-shadow: 0 0 5px 2px color-mix(in srgb, $shadow-color 40%, transparent);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  &:active {
+    box-shadow: 0 0 5px 3px color-mix(in srgb, $shadow-color 40%, transparent);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.menu-container {
+  min-width: 200px;
+  padding: 10px;
+
+  app-filled-button {
+    margin-top: 1rem;
+  }
+
+  .menu-selection {
+    margin-bottom: 1rem;
+  }
+}
+
+::ng-deep app-button md-text-button {
+  width: 100%;
+}
+
+::ng-deep app-filled-button md-filled-button {
+  width: 100%;
+}

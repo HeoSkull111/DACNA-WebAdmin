@@ -1,0 +1,52 @@
+
+@if (active) {
+    @if(isMinimized === true) {
+        <md-filled-icon-button #icon_button>
+            <span class="icon-button">
+                <span class="icon-wrapper">
+                    <span class="icon">
+                        <md-icon>{{icon}}</md-icon>
+                    </span>
+                </span>
+            </span>
+        </md-filled-icon-button>
+    } @else {
+        <md-filled-button #text_button>
+            <span class="button">
+                <span class="icon-wrapper">
+                    <span class="icon" #iconRef>
+                        <md-icon>{{icon}}</md-icon>
+                    </span>
+                </span>
+                <span class="label" #labelRef>
+                    {{ label }}
+                </span>
+            </span>
+        </md-filled-button>
+    }
+} @else { 
+    @if (isMinimized === true) {
+        <md-icon-button #filled_icon_button>
+            <span class="icon-button">
+                <span class="icon-wrapper">
+                    <span class="icon">
+                        <md-icon>{{icon}}</md-icon>
+                    </span>
+                </span>
+            </span>
+        </md-icon-button>
+    } @else {
+        <md-text-button #filled_button>
+            <span class="button">
+                <span class="icon-wrapper">
+                    <span class="icon" #iconRef>
+                        <md-icon>{{icon}}</md-icon>
+                    </span>
+                </span>
+                <span class="label" #labelRef>
+                    {{ label }}
+                </span>
+            </span>
+        </md-text-button>
+    }
+}

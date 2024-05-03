@@ -1,0 +1,35 @@
+<div class="container">
+    <span class="user">
+        <span class="name">
+            <span>
+                Hello
+            </span>
+            <span class="name-wrapper">{{ (user$ | async)?.firstName }} {{ (user$ | async)?.lastName }}</span>
+        </span>
+        <span>
+            <home-avatar (logout)="handleLogout()" [src]="(user$ | async)?.photoUrl"></home-avatar>
+        </span>
+    </span>
+</div>
+
+<app-dialog 
+    #dialog 
+    title="Logout"
+    message="Are you sure you want to logout?"
+    (confirm)="handleConfirmLogout()"
+></app-dialog>
+
+<app-notification-dialog 
+    #logoutNotificationDialog 
+    title="Notification"
+    message="You have been logged out successfully."
+    (completed)="handleLogoutComplete()"
+>
+</app-notification-dialog>
+
+<app-notification-dialog 
+    #logoutErrorDialog 
+    title="Error"
+    message="An error occurred. Please try again."
+>
+</app-notification-dialog>

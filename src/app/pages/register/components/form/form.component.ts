@@ -13,7 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { passwordMatchingValidatior } from '../../helper/validatePassword';
-import { RegisterModel } from '../../models/register.model';
+import { RegisterModel } from '@models/user.model';
 
 @Component({
   selector: 'register-form',
@@ -30,6 +30,7 @@ export class RegisterFormComponent implements OnInit {
       password: new FormControl('', [
         Validators.required,
         Validators.minLength(6),
+        Validators.maxLength(20),
       ]),
       confirmPassword: new FormControl(''),
       firstName: new FormControl('', [
@@ -86,7 +87,6 @@ export class RegisterFormComponent implements OnInit {
           lastName,
         };
 
-        console.log(registerModel);
         this.register.emit(registerModel);
       }
     }
