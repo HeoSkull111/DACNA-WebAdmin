@@ -1,0 +1,32 @@
+@if (user) {
+    <mat-card class="card surface">
+        <mat-card-content>
+            <div class="content-container">
+                <div class="avatar">
+                    <div class="avatar-wrapper">
+                        @if (user.photoUrl !== '') {
+                            <img [src]="user.photoUrl" alt="avatar" />
+                        } @else {
+                            <img src="./assets/default_user_image.png" alt="avatar" />
+                        }
+
+                    </div>
+                </div>
+                <div class="information">
+                    <div class="first-name">
+                        <span class="label"> First Name: </span>
+                        <span class="value"> {{ user.firstName }} </span>
+                    </div>
+                    <div class="last-name">
+                        <span class="label"> Last Name: </span>
+                        <span class="value"> {{ user.lastName }} </span>
+                    </div>
+                    <div class="email">
+                        <span class="label"> Email: </span>
+                        <span class="value"> {{ user.email }} </span>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+}

@@ -1,0 +1,5 @@
+@if (isLoading$ | async) {
+    Loading Data...
+} @else {
+    <group-table [groups]="groups" (onGroupSelected)="handleGroupSelected($event)"></group-table>
+}

@@ -1,47 +1,25 @@
-:host {
-  display: block;
+@use "@angular/material" as mat;
 
-  height: 100%;
-  width: 100%;
-
-  padding: 0;
-  margin: 0;
-
-  background-color: #f3f2f7;
+* {
+  box-sizing: border-box;
 }
-
 .container {
-  height: 100%;
   width: 100%;
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-}
-
-aside {
   height: 100%;
-
-  background-color: #f1f1f1;
-
-  padding: 0;
-  margin: 0;
 }
 
 .content {
-  width: 100%;
-  height: 100%;
-
-  padding: 0;
-  margin: 0;
-
-  & > nav {
-    padding: 0;
-    margin: 0;
-  }
+  padding: 0rem 2rem;
 }
 
-.main-content {
+.main-mask {
+  width: 100%;
+  overflow: hidden;
+  margin-top: 2rem;
+
+  border-radius: 10px;
+}
+
+.main {
   padding: 20px;
 }

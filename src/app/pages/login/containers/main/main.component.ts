@@ -8,7 +8,6 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
-import { NotificationDialogComponent } from 'src/app/components/notification-dialog/notification-dialog.component';
 import { ServerResponse } from 'src/app/models/http-response.model';
 
 import { LoginFormComponent } from '../../components/form/form.component';
@@ -18,17 +17,13 @@ import { LoginModel } from '@models/user.model';
 @Component({
   selector: 'login-main',
   standalone: true,
-  imports: [CommonModule, NotificationDialogComponent, LoginFormComponent],
+  imports: [CommonModule, LoginFormComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginMainComponent implements OnInit {
   constructor(private loginService: UserService, private router: Router) {}
-
-  @ViewChild('notificationDialog') notificationDialog:
-    | NotificationDialogComponent
-    | undefined;
 
   notificationMessage$ = new BehaviorSubject<string>('');
   notificationTitle$ = new BehaviorSubject<string>('');
@@ -45,7 +40,6 @@ export class LoginMainComponent implements OnInit {
       this.notificationTitle$.next('Success');
       this.notificationMessage$.next('User logged in successfully');
       this.notificationType$.next('success');
-      this.notificationDialog?.showDialog();
 
       setTimeout(() => {
         this.router.navigate(['main']);
@@ -59,7 +53,6 @@ export class LoginMainComponent implements OnInit {
     this.notificationTitle$.next('Error');
     this.notificationMessage$.next(response.message);
     this.notificationType$.next('error');
-    this.notificationDialog?.showDialog();
   };
 
   loginUser(user: LoginModel) {

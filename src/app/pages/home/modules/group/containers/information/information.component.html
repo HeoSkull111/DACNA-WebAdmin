@@ -1,0 +1,10 @@
+<div class="information-container">
+    <div class="table">
+        <information-members-table [members]="members" (memberSelected)="handleMemberSelected($event)"></information-members-table>
+    </div>
+    <div class="detail-member-mask" [ngClass]="{'none': !(currentSelectedMember$ | async)}">
+        <div class="detail-member">
+            <information-member-detail [user]="currentSelectedMember$ | async"></information-member-detail>
+        </div>
+    </div>
+</div>

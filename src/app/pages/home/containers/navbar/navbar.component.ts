@@ -2,84 +2,47 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
+  Input,
+  Output,
   ViewChild,
   type OnInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-
-import { UserService } from '@services/user.service';
 import { User } from '@models/user.model';
 
+import { MaterialModule } from 'src/app/modules/material/material.module';
+import { MatDialog } from '@angular/material/dialog';
+
 import { AvatarComponent } from '../../components/avatar/avatar.component';
-import { DialogComponent } from 'src/app/components/dialog/dialog.component';
-import { NotificationDialogComponent } from 'src/app/components/notification-dialog/notification-dialog.component';
+import { ComfirmLogoutComponent } from '../../components/comfirm-logout/comfirm-logout.component';
 
 @Component({
   selector: 'home-navbar',
   standalone: true,
-  imports: [
-    CommonModule,
-    AvatarComponent,
-    DialogComponent,
-    NotificationDialogComponent,
-  ],
+  imports: [CommonModule, MaterialModule, AvatarComponent],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeNavbarComponent implements OnInit {
-  @ViewChild('dialog') dialog: DialogComponent | undefined;
-  @ViewChild('logoutNotificationDialog') logoutNotificationDialog:
-    | NotificationDialogComponent
-    | undefined;
-  @ViewChild('logoutErrorDialog') logoutErrorDialog:
-    | NotificationDialogComponent
-    | undefined;
+export class HomeNavbarComponent {
+  @Input() open = true;
+  @Input() user: User | null = null;
 
-  user$ = new BehaviorSubject<User | null>(null);
+  @Output() onLogout = new EventEmitter<void>();
+  @Output() onToggle = new EventEmitter<void>();
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {
-    this.userService.getUserData().subscribe((res) => {
-      const data = res.data;
+  handleLogout(): void {
+    const dialogRef = this.dialog.open(ComfirmLogoutComponent);
 
-      const user: User = {
-        id: data.id,
-        email: data.email,
-        firstName: data.first_name,
-        lastName: data.last_name,
-        photoUrl: data.photo_url,
-        githubID: data.github_id,
-        googleID: data.google_id,
-      };
-
-      this.user$.next(user);
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!result) return;
+      this.onLogout.emit();
     });
   }
 
-  ngAfterViewInit(): void {}
-
-  handleLogout() {
-    this.dialog?.showDialog();
-  }
-
-  handleConfirmLogout() {
-    this.userService.logoutUser().subscribe((res) => {
-      if (res.status === 200) {
-        this.logoutNotificationDialog?.showDialog();
-
-        setTimeout(() => {
-          this.handleLogoutComplete();
-        }, 1000);
-      } else {
-        this.logoutErrorDialog?.showDialog();
-      }
-    });
-  }
-
-  handleLogoutComplete() {
-    this.router.navigate(['/login']);
+  handleToggle(): void {
+    this.onToggle.emit();
   }
 }

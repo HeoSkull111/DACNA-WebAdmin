@@ -1,13 +1,13 @@
-<div class="container">
-    <aside class="sidebar">
-      <home-sidebar></home-sidebar>
-    </aside>
-    <div class="content">
-      <nav>
-        <home-navbar></home-navbar>
-      </nav>
-      <main class="main-content">
-        <router-outlet></router-outlet>
-      </main>
-    </div>
-  </div>
+<mat-sidenav-container class="container surface-lowest">
+  <mat-sidenav class="sidenav surface-low" mode="side" opened #sidenav>
+    <home-sidebar (onNavigate)="handleNavigate($event)" [currentRoute]="(currentRoute$ | async)!"></home-sidebar>
+  </mat-sidenav>
+  <mat-sidenav-content class="content">
+    <home-navbar [user]="user$ | async" (onToggle)="sidebar.toggle()" (onLogout)="handleLogout()" [open]="sidenav.opened"></home-navbar>
+      <div class="main-mask surface-low" #mainMask>
+        <div class="main" #main>
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

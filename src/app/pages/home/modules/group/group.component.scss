@@ -1,0 +1,25 @@
+:host {
+  display: block;
+}
+.group-name-wrapper {
+  margin-left: 1rem;
+  padding: 1rem;
+}
+
+.tab-container {
+  ::ng-deep mat-tab-header {
+    max-width: 500px;
+  }
+
+  .tab {
+    width: 200px;
+  }
+
+  .tab-icon {
+    margin-right: 8px;
+  }
+
+  .tab-content {
+    padding: 16px;
+  }
+}

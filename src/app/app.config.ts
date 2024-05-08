@@ -7,6 +7,7 @@ import { routes } from './app.routes';
 // Import the interceptors
 import { loggerInterceptor } from './interceptors/logger.interceptor';
 import { requestInterceptor } from './interceptors/request.interceptor';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,5 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([loggerInterceptor, requestInterceptor])
     ),
+    provideAnimationsAsync(), provideAnimationsAsync(),
   ],
 };

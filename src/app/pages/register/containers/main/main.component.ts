@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { NotificationDialogComponent } from 'src/app/components/notification-dialog/notification-dialog.component';
 import { ServerResponse } from 'src/app/models/http-response.model';
 
 import { RegisterFormComponent } from '../../components/form/form.component';
@@ -12,17 +11,13 @@ import { RegisterModel } from '@models/user.model';
 @Component({
   selector: 'register-main',
   standalone: true,
-  imports: [CommonModule, RegisterFormComponent, NotificationDialogComponent],
+  imports: [CommonModule, RegisterFormComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterMainComponent {
   constructor(private registerService: UserService) {}
-
-  @ViewChild('notificationDialog') notificationDialog:
-    | NotificationDialogComponent
-    | undefined;
 
   notificationMessage$ = new BehaviorSubject<string>('');
   notificationTitle$ = new BehaviorSubject<string>('');
@@ -37,7 +32,6 @@ export class RegisterMainComponent {
       this.notificationTitle$.next('Success');
       this.notificationMessage$.next('User registered successfully');
       this.notificationType$.next('success');
-      this.notificationDialog?.showDialog();
     }
   };
 
@@ -47,7 +41,6 @@ export class RegisterMainComponent {
     this.notificationTitle$.next('Error');
     this.notificationMessage$.next(response.message);
     this.notificationType$.next('error');
-    this.notificationDialog?.showDialog();
   };
 
   registerUser(user: RegisterModel) {
