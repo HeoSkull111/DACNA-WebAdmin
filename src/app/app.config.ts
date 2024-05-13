@@ -8,6 +8,16 @@ import { routes } from './app.routes';
 import { loggerInterceptor } from './interceptors/logger.interceptor';
 import { requestInterceptor } from './interceptors/request.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideStore } from '@ngrx/store';
+import { provideEffects } from '@ngrx/effects';
+
+// Store
+import { groupsReducer } from '@pages/home/ngrx/groups/groups.reducer';
+import { membersReducer } from '@pages/home/ngrx/members/members.reducer';
+
+// Effects
+import { GroupsEffects } from '@pages/home/ngrx/groups/groups.effects';
+import { MembersEffects } from '@pages/home/ngrx/members/members.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +25,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(
       withInterceptors([loggerInterceptor, requestInterceptor])
     ),
-    provideAnimationsAsync(), provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideAnimationsAsync(),
+    provideStore({ groups: groupsReducer, members: membersReducer }),
+    provideEffects(GroupsEffects, MembersEffects),
   ],
 };

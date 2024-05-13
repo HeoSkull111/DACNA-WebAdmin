@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>{{data.groupName}} QR Code</h2>
+<mat-dialog-content>
+    <mat-card class="card surface-high">
+        <div class="content-container">
+            <div class="qr-wrapper">
+                <img [src]="'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + data.qrCode" alt="QR Code" />
+            </div>
+        </div>
+    </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-flat-button (click)="onOkClick()" cdkFocusInitial>Ok</button>
+</mat-dialog-actions>

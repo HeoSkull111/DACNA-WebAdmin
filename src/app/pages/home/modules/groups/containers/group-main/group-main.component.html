@@ -1,5 +1,19 @@
-@if (isLoading$ | async) {
-    Loading Data...
-} @else {
-    <group-table [groups]="groups" (onGroupSelected)="handleGroupSelected($event)"></group-table>
-}
+<div class="actions">
+    <button mat-flat-button (click)="handleAddGroup()"> <mat-icon>add</mat-icon> Add group</button>
+</div>
+<ng-container *ngrxLet="groupsState$ as groupsState">
+    @if (groupsState.groupsPagination?.groups?.length === 0) {
+        <h2 class="empty">You have no groups. Create one or join</h2>
+    } @else { 
+        @if (groupsState.isLoading) {
+            Loading Data...
+        } @else {
+            <group-table 
+                [groups]="groupsState.groupsPagination?.groups!" 
+                [totalGroups]="groupsState.groupsPagination?.total!"
+                (onGroupSelected)="handleGroupSelected($event)"
+            ></group-table>
+        }
+    }
+</ng-container>
+

@@ -1,61 +1,64 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
-
-import { Group } from '../../models/group.model';
-
-import { GroupTableComponent } from '../../components/group-table/group-table.component';
-import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { LetDirective } from '@ngrx/component';
+import { Observable, map } from 'rxjs';
+
+//Material
+import { MaterialModule } from 'src/app/modules/material/material.module';
+import { MatDialog } from '@angular/material/dialog';
+
+//components
+import { GroupTableComponent } from '../../components/group-table/group-table.component';
+import { CreateGroupDialogComponent } from '../../components/create-group-dialog/create-group-dialog.component';
+
+// models
+import { Group } from '../../../../models/group.model';
+import { GroupsState } from '@pages/home/ngrx/groups/groups.state';
+import { GroupsActions } from '@pages/home/ngrx/groups/groups.actions';
 
 @Component({
   selector: 'group-main',
   standalone: true,
-  imports: [CommonModule, GroupTableComponent],
+  imports: [CommonModule, LetDirective, MaterialModule, GroupTableComponent],
   templateUrl: './group-main.component.html',
   styleUrl: './group-main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupMainComponent implements OnInit {
-  groups: Group[] | null = null;
-  isLoading$ = new BehaviorSubject<boolean>(false);
+  groupsState$!: Observable<GroupsState>;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private store: Store<{ groups: GroupsState }>
+  ) {}
 
   ngOnInit(): void {
-    this.groups = [
-      {
-        id: '1',
-        name: 'Group 1',
-        description:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec urna tincidunt lacinia. Nulla facilisi',
-      },
-      {
-        id: '2',
-        name: 'Group 2',
-        description:
-          'Description 2 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec urna tincidunt lacinia. Nulla facilisi Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec urna tincidunt lacinia. Nulla facilisi',
-      },
-      {
-        id: '3',
-        name: 'Group 3',
-        description:
-          'Description 3 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec urna tincidunt lacinia. Nulla facilisi',
-      },
-      {
-        id: '4',
-        name: 'Group 4',
-        description:
-          'Description 4 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec odio nec urna tincidunt lacinia. Nulla facilisi',
-      },
-      {
-        id: '5',
-        name: 'Group 5',
-        description: 'Description 5   ',
-      },
-    ];
+    this.store.dispatch(GroupsActions.loadGroups({}));
+    this.groupsState$ = this.store.select((state) => state.groups);
   }
 
   handleGroupSelected(id: string): void {
     this.router.navigate([`main/group/${id}`]);
+  }
+
+  handleAddGroup(): void {
+    const createGroupDialogRef = this.dialog.open(CreateGroupDialogComponent, {
+      width: '400px',
+      data: { name: '', description: '' },
+    });
+
+    createGroupDialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(
+          GroupsActions.addGroup({
+            name: result.name,
+            description: result.description,
+          })
+        );
+      }
+    });
   }
 }

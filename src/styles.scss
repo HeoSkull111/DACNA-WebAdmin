@@ -24,7 +24,7 @@ $dark-theme: matx.define-theme(
       primary: matx.$m3-magenta-palette,
     ),
     density: (
-      scale: -3,
+      scale: -1,
     ),
   )
 );
@@ -37,7 +37,7 @@ $light-theme: matx.define-theme(
       primary: matx.$m3-magenta-palette,
     ),
     density: (
-      scale: -3,
+      scale: -1,
     ),
   )
 );

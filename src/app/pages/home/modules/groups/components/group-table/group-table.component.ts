@@ -10,7 +10,7 @@ import {
 
 import { MaterialModule } from 'src/app/modules/material/material.module';
 
-import { Group } from '../../models/group.model';
+import { Group } from '../../../../models/group.model';
 
 @Component({
   selector: 'group-table',

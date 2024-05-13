@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
-import { Observable, catchError, map, of, throwError } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 
 import { environment } from '@enviroments/environment.development';
 import { LoginModel, RegisterModel } from '../models/user.model';

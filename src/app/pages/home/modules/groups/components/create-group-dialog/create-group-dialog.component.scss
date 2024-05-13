@@ -1,0 +1,14 @@
+:host {
+  display: block;
+}
+
+.title {
+  width: 100%;
+  text-align: center;
+}
+
+.field-container {
+  & > mat-form-field {
+    width: 100%;
+  }
+}

@@ -3,27 +3,28 @@ import {
   ChangeDetectionStrategy,
   Component,
   Inject,
-  Input,
   type OnInit,
 } from '@angular/core';
 
 import { MaterialModule } from 'src/app/modules/material/material.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
-import { GroupMember } from '@pages/home/models/member.model';
-
 @Component({
-  selector: 'information-member-detail',
+  selector: 'app-group-qr',
   standalone: true,
   imports: [CommonModule, MaterialModule],
-  templateUrl: './member-detail.component.html',
-  styleUrl: './member-detail.component.scss',
+  templateUrl: './GroupQR.component.html',
+  styleUrl: './GroupQR.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MemberDetailComponent implements OnInit {
+export class GroupQRComponent implements OnInit {
   constructor(
-    public dialogRef: MatDialogRef<MemberDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public member: GroupMember
+    public dialogRef: MatDialogRef<GroupQRComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      groupName: string;
+      qrCode: string;
+    }
   ) {}
 
   ngOnInit(): void {}

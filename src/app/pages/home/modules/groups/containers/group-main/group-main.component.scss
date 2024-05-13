@@ -1,3 +1,17 @@
 :host {
   display: block;
 }
+
+.actions {
+  margin-bottom: 1rem;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 1rem;
+  font-weight: 400;
+  filter: opacity(0.5);
+}

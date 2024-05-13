@@ -7,8 +7,9 @@ import {
   Output,
   type OnInit,
 } from '@angular/core';
-import { GroupMember } from '../../models/member.model';
 import { MaterialModule } from 'src/app/modules/material/material.module';
+
+import { GroupMember } from '@pages/home/models/member.model';
 
 @Component({
   selector: 'information-members-table',
@@ -20,7 +21,6 @@ import { MaterialModule } from 'src/app/modules/material/material.module';
 })
 export class MembersTableComponent implements OnInit {
   @Input() members: GroupMember[] = [];
-
   @Output() memberSelected = new EventEmitter<string>();
 
   ngOnInit(): void {}
