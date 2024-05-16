@@ -11,6 +11,8 @@ import { LoginMainComponent } from './containers/main/main.component';
   styles: `
     :host {
       display: block;
+      height: 100%;
+      width: 100%; 
     }
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

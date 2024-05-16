@@ -1,33 +1,49 @@
-<form [formGroup]="loginForm">
-    <div class="form-field">
-        <label for="email">Email</label>
-        <input type="email" formControlName="email">
+<form [formGroup]="loginForm"  class="form surface-highest" (keydown)="handleKeyDownSubmit($event)">
+    <h2 class="title on-primary-container">Login</h2>
 
-        @if (email?.errors?.['required'] && email?.touched && email?.dirty) {
-            <div class="form-field-error">Email is required</div>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input
+            matInput
+            type="email"
+            placeholder="telisacaramore@gmail.com"
+            formControlName="email"
+        >
+
+        @if(email?.hasError('required')) {
+            <mat-error>Email is <strong>required</strong></mat-error>
+        } @else if(email?.hasError('email')) {
+            <mat-error>Email is <strong>invalid</strong></mat-error>
         }
+    </mat-form-field>
 
-        @if (email?.errors?.['email'] && email?.touched && email?.dirty) {
-            <div class="form-field-error">Email is invalid</div>
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input 
+            matInput 
+            [type]="showPassword ? 'text' : 'password'" 
+            formControlName="password"
+        >
+        <button 
+            mat-icon-button 
+            matSuffix
+            (click)="handleShowPassword($event)"
+            [attr.aria-label]="'Show password'"
+            [attr.aria-pressed]="!showPassword"
+            class="password-toggle"
+        >
+            <mat-icon>{{showPassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+        </button>
+
+        @if(password?.hasError('required')) {
+            <mat-error>Password is <strong>required</strong></mat-error>
+        } @else if(password?.hasError('minlength')) {
+            <mat-error>Password must be at least <strong>6 characters long</strong></mat-error>
+        } @else if(password?.hasError('maxlength')) {
+            <mat-error>Password must be at most <strong>20 characters long</strong></mat-error>
         }
-    </div>
+        
+    </mat-form-field>    
 
-    <div class="form-field">
-        <label for="password">Password</label>
-        <input type="password" formControlName="password">
-
-        @if (password?.errors?.['required'] && password?.touched && password?.dirty) {
-            <div class="form-field-error">Password is required</div>
-        }
-
-        @if (password?.errors?.['minlength'] && password?.touched && password?.dirty) {
-            <div class="form-field-error">Password must be at least 6 characters long</div>
-        }
-
-        @if (password?.errors?.['maxlength'] && password?.touched && password?.dirty) {
-            <div class="form-field-error">Password must be at most 20 characters long</div>
-        }
-    </div>
-
-    <button (click)="submit()">Login</button>
+    <button mat-flat-button (click)="submit()">Login</button>
 </form>

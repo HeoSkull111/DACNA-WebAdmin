@@ -15,15 +15,19 @@ import {
 
 import { LoginModel } from '@models/user.model';
 
+import { MaterialModule } from 'src/app/modules/material/material.module';
+
 @Component({
   selector: 'login-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginFormComponent implements OnInit {
+  showPassword: boolean = false;
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -43,6 +47,21 @@ export class LoginFormComponent implements OnInit {
 
   get password() {
     return this.loginForm.get('password');
+  }
+
+  handleShowPassword(event: any) {
+    event.preventDefault();
+
+    if (event?.pointerType) {
+      this.showPassword = !this.showPassword;
+    }
+  }
+
+  handleKeyDownSubmit(event: any) {
+    if (!this.loginForm.valid) return;
+    if (event.key === 'Enter') {
+      this.submit();
+    }
   }
 
   submit() {

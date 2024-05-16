@@ -9,21 +9,29 @@ import {
 import {
   FormControl,
   FormGroup,
+  FormGroupDirective,
+  NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+
+import { MaterialModule } from 'src/app/modules/material/material.module';
+
 import { passwordMatchingValidatior } from '../../helper/validatePassword';
 import { RegisterModel } from '@models/user.model';
 
 @Component({
   selector: 'register-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterFormComponent implements OnInit {
+  showPassword = false;
+  showConfirmPassword = false;
+
   registerForm = new FormGroup(
     {
       email: new FormControl('', [Validators.required, Validators.email]),
@@ -32,7 +40,7 @@ export class RegisterFormComponent implements OnInit {
         Validators.minLength(6),
         Validators.maxLength(20),
       ]),
-      confirmPassword: new FormControl(''),
+      confirmPassword: new FormControl('', [Validators.required]),
       firstName: new FormControl('', [
         Validators.required,
         Validators.minLength(2),
@@ -72,6 +80,28 @@ export class RegisterFormComponent implements OnInit {
   get lastName() {
     return this.registerForm.get('lastName');
   }
+
+  passwordErrorMatcher = {
+    isErrorState: (control: FormControl, form: FormGroupDirective): boolean => {
+      const controlInvalid = control.touched && control.invalid;
+      const formInvalid =
+        control.touched &&
+        this.registerForm.get('confirmPassword')!.touched &&
+        this.registerForm.invalid;
+      return controlInvalid || formInvalid;
+    },
+  };
+
+  comfirmPasswordErrorMatcher = {
+    isErrorState: (control: FormControl, form: FormGroupDirective): boolean => {
+      const controlInvalid = control.touched && control.invalid;
+      const formInvalid =
+        control.touched &&
+        this.registerForm.get('password')!.touched &&
+        this.registerForm.invalid;
+      return controlInvalid || formInvalid;
+    },
+  };
 
   submit() {
     this.registerForm.markAsTouched();

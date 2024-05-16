@@ -5,13 +5,14 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 
-import { Observable } from 'rxjs';
+import { Observable, Subscription, lastValueFrom } from 'rxjs';
 
 import { MaterialModule } from 'src/app/modules/material/material.module';
 import { MatDialog } from '@angular/material/dialog';
 
 //components
-import { InformationsComponent } from './containers/information/information.component';
+import { MembersComponent } from './containers/members/members.component';
+import { StatusComponent } from './containers/status/status.component';
 import { RequestsComponent } from './containers/requests/requests.component';
 import { SettingsComponent } from './containers/settings/settings.component';
 
@@ -27,7 +28,8 @@ import { GroupQRComponent } from './components/GroupQR/GroupQR.component';
     CommonModule,
     MaterialModule,
     LetDirective,
-    InformationsComponent,
+    MembersComponent,
+    StatusComponent,
     RequestsComponent,
     SettingsComponent,
   ],
@@ -36,8 +38,10 @@ import { GroupQRComponent } from './components/GroupQR/GroupQR.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GroupComponent implements OnInit {
-  groupID?: string;
   groupsState$!: Observable<GroupsState>;
+
+  groupStateSubscription: Subscription | null = null;
+  groupsState: GroupsState | null = null;
 
   constructor(
     private router: Router,
@@ -46,26 +50,34 @@ export class GroupComponent implements OnInit {
   ) {}
 
   tabs = [
-    { label: 'Information', icon: 'group', component: InformationsComponent },
+    { label: 'Members', icon: 'group', component: MembersComponent },
+    { label: 'Status', icon: 'info', component: StatusComponent },
     { label: 'Requests', icon: 'edit', component: RequestsComponent },
     { label: 'Settings', icon: 'settings', component: SettingsComponent },
   ];
 
   ngOnInit(): void {
-    this.groupID = this.router.url.split('/').pop();
+    const groupID = this.router.url.split('/').pop();
 
-    if (this.groupID) {
-      this.store.dispatch(GroupsActions.loadGroup({ group_id: this.groupID }));
+    if (groupID) {
+      this.store.dispatch(GroupsActions.loadGroup({ group_id: groupID }));
     }
 
     this.groupsState$ = this.store.select((state) => state.groups);
+    this.groupStateSubscription = this.groupsState$.subscribe((state) => {
+      this.groupsState = state;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.groupStateSubscription?.unsubscribe();
   }
 
   onCreateQRCode(): void {
     this.dialog.open(GroupQRComponent, {
       data: {
-        groupName: 'Group',
-        qrCode: this.groupID,
+        groupName: this.groupsState?.currentGroup?.name || 'Unknown Group',
+        qrCode: this.groupsState?.currentGroup?.id,
       },
     });
   }

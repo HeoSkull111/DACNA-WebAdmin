@@ -1,58 +1,59 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewChild,
-  type OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
+import { MaterialModule } from 'src/app/modules/material/material.module';
+import { MatDialog } from '@angular/material/dialog';
+
 import { ServerResponse } from 'src/app/models/http-response.model';
 
-import { LoginFormComponent } from '../../components/form/form.component';
 import { UserService } from '@services/user.service';
 import { LoginModel } from '@models/user.model';
+import { LoginFormComponent } from '../../components/form/form.component';
+
+import { NotificationDialogComponent } from 'src/app/components/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'login-main',
   standalone: true,
-  imports: [CommonModule, LoginFormComponent],
+  imports: [CommonModule, MaterialModule, LoginFormComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginMainComponent implements OnInit {
-  constructor(private loginService: UserService, private router: Router) {}
-
-  notificationMessage$ = new BehaviorSubject<string>('');
-  notificationTitle$ = new BehaviorSubject<string>('');
-  notificationType$ = new BehaviorSubject<
-    'info' | 'warning' | 'error' | 'success'
-  >('info');
+  constructor(
+    private router: Router,
+    private dialog: MatDialog,
+    private loginService: UserService
+  ) {}
 
   ngOnInit(): void {}
 
   loginUserSuccesfully = (response: ServerResponse) => {
-    this.notificationMessage$.next(response.message);
-
     if (response.status === 200) {
-      this.notificationTitle$.next('Success');
-      this.notificationMessage$.next('User logged in successfully');
-      this.notificationType$.next('success');
+      this.dialog.open(NotificationDialogComponent, {
+        data: {
+          title: 'Success',
+          message: 'User logged in successfully',
+        },
+      });
 
       setTimeout(() => {
         this.router.navigate(['main']);
+        this.dialog.closeAll();
       }, 1000);
     }
   };
 
   loginUserFailed = (response: ServerResponse) => {
-    this.notificationMessage$.next(response.message);
-
-    this.notificationTitle$.next('Error');
-    this.notificationMessage$.next(response.message);
-    this.notificationType$.next('error');
+    this.dialog.open(NotificationDialogComponent, {
+      data: {
+        title: 'Error',
+        message: response.message,
+      },
+    });
   };
 
   loginUser(user: LoginModel) {

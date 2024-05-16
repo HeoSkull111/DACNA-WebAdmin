@@ -17,7 +17,7 @@ import { MembersState } from '@pages/home/ngrx/members/members.state';
 import { MembersActions } from '@pages/home/ngrx/members/members.actions';
 
 @Component({
-  selector: 'group-informations',
+  selector: 'group-members',
   standalone: true,
   imports: [
     CommonModule,
@@ -25,11 +25,11 @@ import { MembersActions } from '@pages/home/ngrx/members/members.actions';
     MembersTableComponent,
     MemberDetailComponent,
   ],
-  templateUrl: './information.component.html',
-  styleUrl: './information.component.scss',
+  templateUrl: './members.component.html',
+  styleUrl: './members.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InformationsComponent implements OnInit {
+export class MembersComponent implements OnInit {
   groupID?: string;
 
   members: GroupMember[] = [];
