@@ -39,10 +39,14 @@ export class GroupQRComponent implements OnInit {
 
   ngAfterViewInit(): void {
     if (this.qrCanvas) {
-      QRCode.toCanvas(this.qrCanvas.nativeElement, this.data.qrCode, {
-        errorCorrectionLevel: 'H',
-        width: 200,
-      });
+      QRCode.toCanvas(
+        this.qrCanvas.nativeElement,
+        `checkin:${this.data.qrCode}`,
+        {
+          errorCorrectionLevel: 'H',
+          width: 200,
+        }
+      );
     }
   }
 
