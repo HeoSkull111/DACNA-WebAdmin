@@ -1,23 +1,21 @@
-<form [formGroup]="loginForm"  class="form surface-highest" (keydown)="handleKeyDownSubmit($event)">
+<form [formGroup]="loginForm" class="form surface-highest" (keydown)="handleKeyDownSubmit($event)">
     <h2 class="title on-primary-container">Login</h2>
 
-    <mat-form-field>
-        <mat-label>Email</mat-label>
+    <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
         <input
             matInput
-            type="email"
-            placeholder="telisacaramore@gmail.com"
-            formControlName="email"
+            type="text"
+            placeholder="telisacaramore"
+            formControlName="username"
         >
 
-        @if(email?.hasError('required')) {
-            <mat-error>Email is <strong>required</strong></mat-error>
-        } @else if(email?.hasError('email')) {
-            <mat-error>Email is <strong>invalid</strong></mat-error>
-        }
+        @if(username?.hasError('required')) {
+            <mat-error>Username is <strong>required</strong></mat-error>
+        } 
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
         <input 
             matInput 

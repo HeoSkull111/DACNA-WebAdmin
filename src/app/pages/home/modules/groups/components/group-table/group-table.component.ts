@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 
 import { MaterialModule } from 'src/app/modules/material/material.module';
+import { PageEvent } from '@angular/material/paginator';
 
 import { Group } from '../../../../models/group.model';
 
@@ -23,8 +24,10 @@ import { Group } from '../../../../models/group.model';
 export class GroupTableComponent implements OnInit {
   @Input() groups: Group[] | null = null;
   @Input() totalGroups = 5;
+  @Input() pageIndex = 1;
 
   @Output() onGroupSelected = new EventEmitter<string>();
+  @Output() onPaginate = new EventEmitter<PageEvent>();
 
   displayedColumns: string[] = ['name', 'description', 'actions'];
 
@@ -32,5 +35,9 @@ export class GroupTableComponent implements OnInit {
 
   goToGroup(id: string): void {
     this.onGroupSelected.emit(id);
+  }
+
+  hadnleOnChangePaginate(event: PageEvent) {
+    this.onPaginate.emit(event);
   }
 }

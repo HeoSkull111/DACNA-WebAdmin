@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
 
 import { Observable, catchError, of, throwError } from 'rxjs';
 
 import { environment } from '@enviroments/environment.development';
-import { LoginModel, RegisterModel } from '../models/user.model';
+import { LoginModel, RegisterModel, UpdateUser } from '../models/user.model';
 
 import { ServerResponse } from 'src/app/models/http-response.model';
 
@@ -53,14 +52,11 @@ const dummyUserDatas = [
 export class UserService {
   private apiUrl = environment.apiUrl;
 
-  constructor(
-    private httpClient: HttpClient,
-    private cookieService: CookieService
-  ) {}
+  constructor(private httpClient: HttpClient) {}
 
   loginUser(user: LoginModel): Observable<ServerResponse> {
     const body = {
-      email: user.email,
+      username: user.username,
       password: user.password,
     };
 
@@ -102,6 +98,22 @@ export class UserService {
   getUserData(): Observable<ServerResponse> {
     return this.httpClient
       .get<ServerResponse>(`${this.apiUrl}/user`)
+      .pipe(
+        catchError((error: HttpErrorResponse) => throwError(() => error.error))
+      );
+  }
+
+  updateUserData(data: UpdateUser): Observable<ServerResponse> {
+    const body = {
+      username: data.username,
+      email: data.email,
+      first_name: data.firstName,
+      last_name: data.lastName,
+      phone: data.phone,
+    };
+
+    return this.httpClient
+      .put<ServerResponse>(`${this.apiUrl}/user/update`, body)
       .pipe(
         catchError((error: HttpErrorResponse) => throwError(() => error.error))
       );

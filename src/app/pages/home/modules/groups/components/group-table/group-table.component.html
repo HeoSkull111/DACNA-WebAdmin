@@ -26,5 +26,12 @@
 </table>
 
 <div>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" [length]="totalGroups" showFirstLastButtons></mat-paginator>
+  <mat-paginator 
+    [pageSizeOptions]="[]" 
+    [pageSize]=5
+    [length]="totalGroups" 
+    [pageIndex]="pageIndex"
+    showFirstLastButtons
+    (page)="hadnleOnChangePaginate($event)"
+    ></mat-paginator>
 </div>

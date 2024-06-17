@@ -29,7 +29,7 @@ export class LoginFormComponent implements OnInit {
   showPassword: boolean = false;
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    username: new FormControl('', [Validators.required]),
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(6),
@@ -41,7 +41,7 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  get email() {
+  get username() {
     return this.loginForm.get('email');
   }
 
@@ -68,11 +68,11 @@ export class LoginFormComponent implements OnInit {
     this.loginForm.markAsTouched();
 
     if (this.loginForm.valid) {
-      const { email, password } = this.loginForm.value;
+      const { username, password } = this.loginForm.value;
 
-      if (email && password) {
+      if (username && password) {
         const loginModel: LoginModel = {
-          email,
+          username,
           password,
         };
 

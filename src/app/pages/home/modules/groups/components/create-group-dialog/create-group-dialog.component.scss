@@ -7,8 +7,21 @@
   text-align: center;
 }
 
-.field-container {
-  & > mat-form-field {
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px;
+
+  mat-form-field {
+    margin-bottom: 10px;
     width: 100%;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 20px;
   }
 }

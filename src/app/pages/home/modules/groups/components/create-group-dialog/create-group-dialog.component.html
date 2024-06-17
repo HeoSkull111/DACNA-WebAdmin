@@ -1,20 +1,33 @@
-<h2 mat-dialog-title class="title">Create new group</h2>
+<h2 mat-dialog-title class="title on-primary-container">Create new group</h2>
 <mat-dialog-content>
-  <div class="field-container">
+  <form [formGroup]="createGroupForm" class="form">
     <mat-form-field>
       <mat-label>Name</mat-label>
-      <input matInput [(ngModel)]="data.name">
-    </mat-form-field>
-  </div>
+      <input matInput minlength="3" maxlength="255" formControlName="groupName">
 
-  <div class="field-container">
+      @if (groupName?.hasError('required')) {
+        <mat-error>Name is required</mat-error>
+      } @else if (groupName?.hasError('minlength')) {
+        <mat-error>Name must be at least 3 characters long</mat-error>
+      } @else if (groupName?.hasError('maxlength')) {
+        <mat-error>Name must be at less than 255 characters long</mat-error>
+      }
+    </mat-form-field>
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <textarea matInput [(ngModel)]="data.description"></textarea>
+      <textarea matInput minlength="8" maxlength="255" formControlName="groupDescription"></textarea>
+
+      @if (groupDescription?.hasError('required')) {
+        <mat-error>Description is required</mat-error>
+      } @else if (groupDescription?.hasError('minlength')) {
+        <mat-error>Description must be at least 8 characters long</mat-error>
+      } @else if (groupDescription?.hasError('maxlength')) {
+        <mat-error>Description must be at less than 255 characters long</mat-error>
+      }
     </mat-form-field>
-  </div>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onCancleClick()">Cancel</button>
-  <button mat-flat-button [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+  <button mat-flat-button [mat-dialog-close]="createGroupForm.value" cdkFocusInitial>Create</button>
 </mat-dialog-actions>

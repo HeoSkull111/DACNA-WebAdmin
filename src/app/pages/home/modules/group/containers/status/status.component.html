@@ -1,1 +1,9 @@
-<p>status works!</p>,
+<ng-container *ngrxLet="membersState$ as membersState">
+    <div class="information-container">
+        <div class="table">
+            <status-table
+                [members]="membersState.groupMembersPagination?.members!" 
+            ></status-table>
+        </div>
+    </div>
+</ng-container>

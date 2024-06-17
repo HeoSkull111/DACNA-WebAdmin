@@ -17,6 +17,7 @@ import { CreateGroupDialogComponent } from '../../components/create-group-dialog
 import { Group } from '../../../../models/group.model';
 import { GroupsState } from '@pages/home/ngrx/groups/groups.state';
 import { GroupsActions } from '@pages/home/ngrx/groups/groups.actions';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'group-main',
@@ -60,5 +61,14 @@ export class GroupMainComponent implements OnInit {
         );
       }
     });
+  }
+
+  handleOnPaginate(event: PageEvent): void {
+    this.store.dispatch(
+      GroupsActions.loadGroups({
+        currentPage: event.pageIndex + 1,
+        perPage: event.pageSize,
+      })
+    );
   }
 }

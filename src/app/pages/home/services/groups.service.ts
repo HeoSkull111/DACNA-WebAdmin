@@ -38,12 +38,9 @@ export class GroupsService {
     perPage: number = 5
   ): Observable<GroupsPagination> {
     return this.httpClient
-      .get<ServerResponse>(`${this.apiUrl}/group/list`, {
-        params: {
-          page: currentPage.toString(),
-          limit: perPage.toString(),
-        },
-      })
+      .get<ServerResponse>(
+        `${this.apiUrl}/group/list?page=${currentPage}&limit=${perPage}`
+      )
       .pipe(
         map((res) => {
           if (res.status !== 200) {

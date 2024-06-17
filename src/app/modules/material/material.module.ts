@@ -13,6 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const materialModules = [
   MatSidenavModule,
@@ -27,6 +28,7 @@ const materialModules = [
   MatCardModule,
   MatInputModule,
   MatFormFieldModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({

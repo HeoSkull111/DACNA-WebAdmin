@@ -15,7 +15,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { HomeNavbarComponent } from './containers/navbar/navbar.component';
 import { HomeSidebarComponent } from './containers/sidebar/sidebar.component';
 
-import { User } from '@models/user.model';
+import { FullUser, User } from '@models/user.model';
 import { UserService } from '@services/user.service';
 
 @Component({
@@ -42,7 +42,7 @@ export class HomeComponent {
   resizeObserver!: ResizeObserver;
   previousMaskHeight = 0;
 
-  user$ = new BehaviorSubject<User | null>(null);
+  user$ = new BehaviorSubject<FullUser | null>(null);
   currentRoute$ = new BehaviorSubject<string>('dashboard');
 
   constructor(private userService: UserService, private router: Router) {}
@@ -65,14 +65,14 @@ export class HomeComponent {
     this.userService.getUserData().subscribe((res) => {
       const data = res.data;
 
-      const user: User = {
+      const user: FullUser = {
         id: data.id,
+        username: data.username,
         email: data.email,
-        firstName: data.first_name,
-        lastName: data.last_name,
         photoUrl: data.photo_url,
-        githubID: data.github_id,
-        googleID: data.google_id,
+        lastName: data.last_name,
+        firstName: data.first_name,
+        phone: data.phone,
       };
 
       this.user$.next(user);

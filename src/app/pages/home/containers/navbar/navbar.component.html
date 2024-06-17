@@ -12,16 +12,16 @@
             <span>
                 Hello
             </span>
-            <span class="name-wrapper on-primary-container">{{ user?.firstName }} {{ user?.lastName }}</span>
+            <span class="name-wrapper on-primary-container">{{ user?.username }}</span>
         </span>
         <span>
             <home-avatar (logout)="handleLogout()" [src]="user?.photoUrl" [matMenuTriggerFor]="userMenu"></home-avatar>
             <mat-menu class="user-menu" #userMenu="matMenu">
-                <button mat-menu-item (click)="handleLogout()">
+                <button mat-menu-item (click)="handleMyAccount()">
                     <mat-icon>account_circle</mat-icon>
                     <span>My account</span>
                 </button>
-                <button mat-menu-item (click)="handleLogout()">
+                <button  mat-menu-item (click)="handleLogout()">
                     <mat-icon>exit_to_app</mat-icon>
                     <span>Logout</span>
                 </button>

@@ -5,9 +5,9 @@ import {
   EventEmitter,
   Input,
   Output,
-  ViewChild,
-  type OnInit,
 } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { User } from '@models/user.model';
 
 import { MaterialModule } from 'src/app/modules/material/material.module';
@@ -31,7 +31,7 @@ export class HomeNavbarComponent {
   @Output() onLogout = new EventEmitter<void>();
   @Output() onToggle = new EventEmitter<void>();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
   handleLogout(): void {
     const dialogRef = this.dialog.open(ComfirmLogoutComponent);
@@ -40,6 +40,10 @@ export class HomeNavbarComponent {
       if (!result) return;
       this.onLogout.emit();
     });
+  }
+
+  handleMyAccount(): void {
+    this.router.navigate(['/account']);
   }
 
   handleToggle(): void {

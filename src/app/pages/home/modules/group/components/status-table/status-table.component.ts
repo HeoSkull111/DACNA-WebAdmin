@@ -10,24 +10,23 @@ import {
 import { MaterialModule } from 'src/app/modules/material/material.module';
 
 import { GroupMember } from '@pages/home/models/member.model';
-
 @Component({
-  selector: 'members-table',
+  selector: 'status-table',
   standalone: true,
   imports: [CommonModule, MaterialModule],
-  templateUrl: './members-table.component.html',
-  styleUrl: './members-table.component.scss',
+  templateUrl: './status-table.component.html',
+  styleUrl: './status-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MembersTableComponent implements OnInit {
+export class StatusTableComponent implements OnInit {
   @Input() members: GroupMember[] = [];
-  @Output() memberSelected = new EventEmitter<string>();
+  @Output() memberCheckedOut = new EventEmitter<string>();
 
   ngOnInit(): void {}
 
-  displayedColumns: string[] = ['First Name', 'Last Name', 'Role', 'Actions'];
+  displayedColumns: string[] = ['First Name', 'Last Name', 'Status', 'Actions'];
 
-  selectMember(memberId: string): void {
-    this.memberSelected.emit(memberId);
+  checkoutMember(memberId: string): void {
+    this.memberCheckedOut.emit(memberId);
   }
 }

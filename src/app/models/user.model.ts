@@ -1,17 +1,27 @@
 export type User = {
   id: string;
   email: string;
-
-  firstName: string;
-  lastName: string;
+  username: string;
   photoUrl: string;
-
-  googleID?: string;
-  githubID?: string;
 };
 
+export type UserProfile = {
+  id: string;
+  lastName: string;
+  firstName: string;
+  phone: string | undefined;
+};
+
+export type FullUser = User & UserProfile;
+
+type Nullable<T> = {
+  [P in keyof T]: T[P] | null;
+};
+
+export type UpdateUser = Nullable<Partial<Omit<FullUser, 'id' | 'photoUrl'>>>;
+
 export type LoginModel = {
-  email: string;
+  username: string;
   password: string;
 };
 

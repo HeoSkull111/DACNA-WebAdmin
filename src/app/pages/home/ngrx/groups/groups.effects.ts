@@ -6,10 +6,13 @@ import { catchError, map, of, switchMap } from 'rxjs';
 import { GroupsActions } from './groups.actions';
 import { GroupsService } from '@pages/home/services/groups.service';
 
+import { Store } from '@ngrx/store';
+
 @Injectable()
 export class GroupsEffects {
   constructor(
     private actions$: Actions,
+    private store: Store,
     private groupsService: GroupsService
   ) {}
 
@@ -41,7 +44,10 @@ export class GroupsEffects {
       switchMap(({ name, description }) =>
         this.groupsService.addGroup(name, description)
       ),
-      map((group) => GroupsActions.addGroupSuccess({ group })),
+      map((group) => {
+        this.store.dispatch(GroupsActions.loadGroups({}));
+        return GroupsActions.addGroupSuccess({ group });
+      }),
       catchError((error) => of(GroupsActions.addGroupFailure({ error })))
     );
   });

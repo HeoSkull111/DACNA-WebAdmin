@@ -5,8 +5,8 @@
             <div class="content-container">
                 <div class="avatar">
                     <div class="avatar-wrapper">
-                        @if (member!.photoUrl !== '') {
-                            <img [src]="member!.photoUrl" alt="avatar" />
+                        @if (member!.user.photoUrl !== '') {
+                            <img [src]="member!.user.photoUrl" alt="avatar" />
                         } @else {
                             <img src="./assets/default_user_image.png" alt="avatar" />
                         }
@@ -16,15 +16,15 @@
                 <div class="information">
                     <div class="first-name">
                         <span class="label"> First Name: </span>
-                        <span class="value on-primary-container"> {{ member!.firstName }} </span>
+                        <span class="value on-primary-container"> {{ member!.user.firstName }} </span>
                     </div>
                     <div class="last-name">
                         <span class="label"> Last Name: </span>
-                        <span class="value on-primary-container"> {{ member!.lastName }} </span>
+                        <span class="value on-primary-container"> {{ member!.user.lastName }} </span>
                     </div>
                     <div class="email">
                         <span class="label"> Email: </span>
-                        <span class="value on-primary-container"> {{ member!.email }} </span>
+                        <span class="value on-primary-container"> {{ member!.user.email }} </span>
                     </div>
                 </div>
             </div>

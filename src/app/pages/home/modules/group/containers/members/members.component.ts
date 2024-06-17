@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 
-import { Observable, lastValueFrom } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { MatDialog } from '@angular/material/dialog';
 
