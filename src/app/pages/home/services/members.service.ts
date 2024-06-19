@@ -69,4 +69,58 @@ export class MembersService {
         })
       );
   }
+
+  getCurrentMember(group_id: string): Observable<GroupMember> {
+    return this.httpClient
+      .get<ServerResponse>(`${this.apiUrl}/group/current-member`, {
+        params: {
+          group_id,
+        },
+      })
+      .pipe(
+        map((res) => {
+          if (res.status !== 200) {
+            throw new Error(res.message);
+          }
+
+          return res.data;
+        })
+      );
+  }
+
+  addMembers(group_id: string, users_id: string[]) {
+    return this.httpClient
+      .post<ServerResponse>(`${this.apiUrl}/group/add-members`, {
+        group_id,
+        member_ids: users_id,
+      })
+      .pipe(
+        map((res) => {
+          if (res.status !== 201) {
+            throw new Error(res.message);
+          }
+
+          return group_id;
+        })
+      );
+  }
+
+  deleteMember(group_id: string, member_id: string) {
+    return this.httpClient
+      .delete<ServerResponse>(`${this.apiUrl}/group/delete-member`, {
+        params: {
+          group_id,
+          member_id,
+        },
+      })
+      .pipe(
+        map((res) => {
+          if (res.status !== 200) {
+            throw new Error(res.message);
+          }
+
+          return group_id;
+        })
+      );
+  }
 }

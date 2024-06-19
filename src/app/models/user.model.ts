@@ -26,8 +26,10 @@ export type LoginModel = {
 };
 
 export type RegisterModel = {
+  username: string;
   email: string;
   password: string;
   firstName: string;
   lastName: string;
+  phoneNumber: string;
 };

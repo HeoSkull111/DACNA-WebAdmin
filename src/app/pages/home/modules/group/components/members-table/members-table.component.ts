@@ -21,13 +21,21 @@ import { GroupMember } from '@pages/home/models/member.model';
 })
 export class MembersTableComponent implements OnInit {
   @Input() members: GroupMember[] = [];
+  @Input() currentMember: GroupMember | null = null;
   @Output() memberSelected = new EventEmitter<string>();
+  @Output() memberDeleted = new EventEmitter<string>();
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log(this.currentMember);
+  }
 
   displayedColumns: string[] = ['First Name', 'Last Name', 'Role', 'Actions'];
 
   selectMember(memberId: string): void {
     this.memberSelected.emit(memberId);
+  }
+
+  deleteMember(memberId: string): void {
+    this.memberDeleted.emit(memberId);
   }
 }

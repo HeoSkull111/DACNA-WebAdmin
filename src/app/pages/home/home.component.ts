@@ -12,11 +12,17 @@ import { BehaviorSubject } from 'rxjs';
 import { MaterialModule } from 'src/app/modules/material/material.module';
 import { MatSidenav } from '@angular/material/sidenav';
 
+// Components
 import { HomeNavbarComponent } from './containers/navbar/navbar.component';
 import { HomeSidebarComponent } from './containers/sidebar/sidebar.component';
 
-import { FullUser, User } from '@models/user.model';
+// Services
 import { UserService } from '@services/user.service';
+
+// ngrx
+import { Store } from '@ngrx/store';
+import { UserState } from 'src/app/ngrx/user.state';
+import { UsersActions } from 'src/app/ngrx/user.actions';
 
 @Component({
   selector: 'app-home',
@@ -42,10 +48,14 @@ export class HomeComponent {
   resizeObserver!: ResizeObserver;
   previousMaskHeight = 0;
 
-  user$ = new BehaviorSubject<FullUser | null>(null);
+  user$ = this.store.select((state) => state.users.user);
   currentRoute$ = new BehaviorSubject<string>('dashboard');
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private store: Store<{ users: UserState }>,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   initRoute(): void {
     const currentRoute = this.router.url.split('/')[2];
@@ -58,24 +68,6 @@ export class HomeComponent {
       if (event instanceof NavigationEnd) {
         this.currentRoute$.next(event.url.split('/')[2]);
       }
-    });
-  }
-
-  initUser(): void {
-    this.userService.getUserData().subscribe((res) => {
-      const data = res.data;
-
-      const user: FullUser = {
-        id: data.id,
-        username: data.username,
-        email: data.email,
-        photoUrl: data.photo_url,
-        lastName: data.last_name,
-        firstName: data.first_name,
-        phone: data.phone,
-      };
-
-      this.user$.next(user);
     });
   }
 
@@ -101,7 +93,7 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.initRoute();
-    this.initUser();
+    this.store.dispatch(UsersActions.getUser());
   }
 
   ngAfterViewInit(): void {

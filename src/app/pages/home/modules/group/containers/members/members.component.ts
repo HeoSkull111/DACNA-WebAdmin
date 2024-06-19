@@ -1,20 +1,28 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { toSignal } from '@angular/core/rxjs-interop';
 
+// ngrx
 import { Store } from '@ngrx/store';
 import { LetDirective } from '@ngrx/component';
 
-import { Observable } from 'rxjs';
-
-import { MatDialog } from '@angular/material/dialog';
-
-import { MembersTableComponent } from '../../components/members-table/members-table.component';
-import { MemberDetailComponent } from '../../components/member-detail/member-detail.component';
-
-import { GroupMember } from '@pages/home/models/member.model';
 import { MembersState } from '@pages/home/ngrx/members/members.state';
 import { MembersActions } from '@pages/home/ngrx/members/members.actions';
+
+import { CurrentMemberState } from '@pages/home/ngrx/current-member/current-member.state';
+
+// rxjs
+import { Observable } from 'rxjs';
+
+// components
+import { MembersTableComponent } from '../../components/members-table/members-table.component';
+import { MemberDetailComponent } from '../../components/member-detail/member-detail.component';
+import { ComfirmDialogComponent } from 'src/app/components/comfirm-dialog/comfirm-dialog.component';
+
+// models
+import { GroupMember } from '@pages/home/models/member.model';
 
 @Component({
   selector: 'group-members',
@@ -35,10 +43,17 @@ export class MembersComponent implements OnInit {
   members: GroupMember[] = [];
   membersState$!: Observable<MembersState>;
 
+  currentMember = toSignal(
+    this.store.select((state) => state.currentMember.currentMember)
+  );
+
   constructor(
     private router: Router,
     private dialog: MatDialog,
-    private store: Store<{ members: MembersState }>
+    private store: Store<{
+      members: MembersState;
+      currentMember: CurrentMemberState;
+    }>
   ) {}
 
   ngOnInit(): void {
@@ -66,6 +81,31 @@ export class MembersComponent implements OnInit {
       });
 
       stateSubscription.unsubscribe();
+    });
+  }
+
+  async handleMemberDeleted(id: string): Promise<void> {
+    const dialogRef = this.dialog.open<ComfirmDialogComponent, any, boolean>(
+      ComfirmDialogComponent,
+      {
+        data: {
+          title: 'Delete Member?',
+          message: 'Are you sure you want to delete this member?',
+        },
+        enterAnimationDuration: 300,
+        exitAnimationDuration: 300,
+      }
+    );
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.store.dispatch(
+          MembersActions.deleteMember({
+            group_id: this.groupID!,
+            member_id: id,
+          })
+        );
+      }
     });
   }
 }

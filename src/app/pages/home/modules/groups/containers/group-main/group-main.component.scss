@@ -1,9 +1,23 @@
 :host {
   display: block;
 }
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 1rem;
+}
+
+.title {
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+  }
+}
 
 .actions {
-  margin-bottom: 1rem;
+  margin-left: 1rem;
 }
 
 .empty {

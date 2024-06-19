@@ -58,4 +58,13 @@ export class CreateGroupDialogComponent implements OnInit {
   onCancleClick(): void {
     this.dialogRef.close();
   }
+
+  onCreateClick(): void {
+    if (this.createGroupForm.valid) {
+      this.dialogRef.close({
+        name: this.groupName?.value,
+        description: this.groupDescription?.value,
+      });
+    }
+  }
 }

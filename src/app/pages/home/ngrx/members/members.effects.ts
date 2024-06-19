@@ -35,4 +35,36 @@ export class MembersEffects {
       catchError((error) => of(MembersActions.loadMemberFailure({ error })))
     );
   });
+
+  addMembers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MembersActions.addMembers),
+      switchMap(({ group_id, users_id }) =>
+        this.membersService.addMembers(group_id, users_id)
+      ),
+      switchMap((group_id) =>
+        of(
+          MembersActions.loadMembers({ group_id: group_id }),
+          MembersActions.addMembersSuccess()
+        )
+      ),
+      catchError((error) => of(MembersActions.addMembersFailure({ error })))
+    );
+  });
+
+  deleteMember$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(MembersActions.deleteMember),
+      switchMap(({ group_id, member_id }) =>
+        this.membersService.deleteMember(group_id, member_id)
+      ),
+      switchMap((group_id) =>
+        of(
+          MembersActions.loadMembers({ group_id: group_id }),
+          MembersActions.deleteMemberSuccess()
+        )
+      ),
+      catchError((error) => of(MembersActions.deleteMemberFailure({ error })))
+    );
+  });
 }

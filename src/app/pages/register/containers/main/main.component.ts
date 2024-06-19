@@ -8,6 +8,11 @@ import { RegisterFormComponent } from '../../components/form/form.component';
 import { UserService } from '@services/user.service';
 import { RegisterModel } from '@models/user.model';
 
+// Dialog
+import { MatDialog } from '@angular/material/dialog';
+import { NotificationDialogComponent } from 'src/app/components/notification-dialog/notification-dialog.component';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'register-main',
   standalone: true,
@@ -17,30 +22,32 @@ import { RegisterModel } from '@models/user.model';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterMainComponent {
-  constructor(private registerService: UserService) {}
-
-  notificationMessage$ = new BehaviorSubject<string>('');
-  notificationTitle$ = new BehaviorSubject<string>('');
-  notificationType$ = new BehaviorSubject<
-    'info' | 'warning' | 'error' | 'success'
-  >('info');
+  constructor(
+    private registerService: UserService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   registerUserSuccesfully = (response: ServerResponse) => {
-    this.notificationMessage$.next(response.message);
+    const dialogRef = this.dialog.open(NotificationDialogComponent, {
+      data: {
+        title: 'Register Successfully',
+        message: 'You will be redirected to the login page.',
+      },
+    });
 
-    if (response.status === 201) {
-      this.notificationTitle$.next('Success');
-      this.notificationMessage$.next('User registered successfully');
-      this.notificationType$.next('success');
-    }
+    dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   };
 
   registerUserFailed = (response: ServerResponse) => {
-    this.notificationMessage$.next(response.message);
-
-    this.notificationTitle$.next('Error');
-    this.notificationMessage$.next(response.message);
-    this.notificationType$.next('error');
+    this.dialog.open(NotificationDialogComponent, {
+      data: {
+        title: 'Register Failed',
+        message: `Error: ${response.message}\n${response.error}`,
+      },
+    });
   };
 
   registerUser(user: RegisterModel) {

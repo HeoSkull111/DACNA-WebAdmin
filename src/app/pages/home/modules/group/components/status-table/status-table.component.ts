@@ -20,6 +20,7 @@ import { GroupMember } from '@pages/home/models/member.model';
 })
 export class StatusTableComponent implements OnInit {
   @Input() members: GroupMember[] = [];
+  @Input() currentMember: GroupMember | null = null;
   @Output() memberCheckedOut = new EventEmitter<string>();
 
   ngOnInit(): void {}

@@ -40,8 +40,34 @@
         } @else if(password?.hasError('maxlength')) {
             <mat-error>Password must be at most <strong>20 characters long</strong></mat-error>
         }
-        
     </mat-form-field>    
-
     <button mat-flat-button (click)="submit()">Login</button>
+    <div class="bottom-container">
+        <span class="register on-surface-variant">
+            Don't have an account? <span routerLink="/register" class="on-primary-container">Register</span>
+        </span>
+        <div class="platforms">
+            <span class="google">
+                <button mat-icon-button>
+                    <mat-icon>
+                        <img src="./assets/icons/google.svg">
+                    </mat-icon>
+                </button>
+            </span>
+            <span class="google">
+                <button mat-icon-button>
+                    <mat-icon>
+                        <img src="./assets/icons/facebook.svg">
+                    </mat-icon>
+                </button>
+            </span>
+            <span class="google">
+                <button mat-icon-button>
+                    <mat-icon>
+                        <img src="./assets/icons/github.svg">
+                    </mat-icon>
+                </button>
+            </span>
+        </div>
+    </div>
 </form>

@@ -10,7 +10,7 @@
 }
 
 .form {
-  min-width: 400px;
+  min-width: 450px;
 
   display: flex;
   flex-direction: column;
@@ -20,6 +20,27 @@
   padding: 30px;
   border-radius: 10px;
 
+  .combined-field {
+    width: 100%;
+    padding: 0;
+
+    display: flex;
+    flex-direction: row;
+
+    mat-form-field {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .first-name {
+      margin-right: 10px;
+    }
+
+    .last-name {
+      margin-left: 10px;
+    }
+  }
+
   mat-form-field {
     margin-bottom: 10px;
     width: 100%;
@@ -27,10 +48,20 @@
 
   button {
     width: 100%;
-    margin-top: 20px;
   }
 }
 
 .password-toggle {
   margin-top: 0 !important;
+}
+
+.bottom-container {
+  margin-top: 20px;
+
+  .login {
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    cursor: pointer;
+  }
 }

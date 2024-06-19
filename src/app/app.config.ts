@@ -14,11 +14,13 @@ import { provideEffects } from '@ngrx/effects';
 // Store
 import { groupsReducer } from '@pages/home/ngrx/groups/groups.reducer';
 import { membersReducer } from '@pages/home/ngrx/members/members.reducer';
+import { currentMemberReducer } from '@pages/home/ngrx/current-member/current-member.reducer';
 import { userReducer } from './ngrx/user.reducer';
 
 // Effects
 import { GroupsEffects } from '@pages/home/ngrx/groups/groups.effects';
 import { MembersEffects } from '@pages/home/ngrx/members/members.effects';
+import { CurrentMemberEffects } from '@pages/home/ngrx/current-member/current-member.effects';
 import { UsersEffects } from './ngrx/user.effects';
 
 export const appConfig: ApplicationConfig = {
@@ -28,12 +30,17 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([loggerInterceptor, requestInterceptor])
     ),
     provideAnimationsAsync(),
-    provideAnimationsAsync(),
     provideStore({
       groups: groupsReducer,
       members: membersReducer,
+      currentMember: currentMemberReducer,
       users: userReducer,
     }),
-    provideEffects(GroupsEffects, MembersEffects, UsersEffects),
+    provideEffects(
+      GroupsEffects,
+      MembersEffects,
+      UsersEffects,
+      CurrentMemberEffects
+    ),
   ],
 };

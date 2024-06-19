@@ -1,10 +1,18 @@
-<ng-container *ngrxLet="groupsState$ as groupsState">
+<ng-container>
     <div class="header">
-        <h1 class="group-name-wrapper">Group <span class="group-name on-primary-container">{{groupsState.currentGroup?.name}}</span></h1>
+        <h1 class="group-name-wrapper">Group <span class="group-name on-primary-container">{{groupState()?.name}}</span></h1>
         <button mat-stroked-button class="qr-button on-primary-container" (click)="onCreateQRCode()">
             <mat-icon>qr_code</mat-icon>
             QR Code
         </button>
+
+        @if(currentMemberState()?.role === 'owner') {
+            <button mat-flat-button class="qr-button on-primary-container" (click)="onFindMember()">
+                <mat-icon>person_add</mat-icon>
+                Add Member
+            </button>
+        }
+
     </div>
     
     <div class="tab-container">

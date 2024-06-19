@@ -1,8 +1,13 @@
-import { FullUser } from '@models/user.model';
-
 export type GroupMember = {
   id: string;
-  user: FullUser;
+
+  username: string;
+  email: string;
+  photoUrl: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+
   status: 'WORKING' | 'LEFT';
   role: string;
 };

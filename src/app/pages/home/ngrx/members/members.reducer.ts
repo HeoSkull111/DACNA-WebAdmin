@@ -43,5 +43,37 @@ export const membersReducer = createReducer(
     ...state,
     error,
     isLoading: false,
+  })),
+
+  on(MembersActions.addMembers, (state) => ({
+    ...state,
+    error: '',
+    isLoading: true,
+  })),
+  on(MembersActions.addMembersSuccess, (state) => ({
+    ...state,
+    error: '',
+    isLoading: false,
+  })),
+  on(MembersActions.addMembersFailure, (state, { error }) => ({
+    ...state,
+    error,
+    isLoading: false,
+  })),
+
+  on(MembersActions.deleteMember, (state) => ({
+    ...state,
+    error: '',
+    isLoading: true,
+  })),
+  on(MembersActions.deleteMemberSuccess, (state) => ({
+    ...state,
+    error: '',
+    isLoading: false,
+  })),
+  on(MembersActions.deleteMemberFailure, (state, { error }) => ({
+    ...state,
+    error,
+    isLoading: false,
   }))
 );

@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
-@use "@angular/material-experimental" as matx;
+@use "./m3-theme.scss";
 @use "sass:map";
 
 @import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200");
@@ -15,32 +15,6 @@
 * {
   box-sizing: border-box;
 }
-
-// default theme (dark)
-$dark-theme: matx.define-theme(
-  (
-    color: (
-      theme-type: dark,
-      primary: matx.$m3-magenta-palette,
-    ),
-    density: (
-      scale: -1,
-    ),
-  )
-);
-
-// default light theme
-$light-theme: matx.define-theme(
-  (
-    color: (
-      theme-type: light,
-      primary: matx.$m3-magenta-palette,
-    ),
-    density: (
-      scale: -1,
-    ),
-  )
-);
 
 @mixin theme($theme) {
   @if (mat.get-theme-type($theme) == dark) {
@@ -122,11 +96,9 @@ $light-theme: matx.define-theme(
 }
 
 :root {
-  @include theme($dark-theme);
-  @include mat.all-component-themes($dark-theme);
-  @include matx.color-variants-back-compat($dark-theme);
+  @include theme(m3-theme.$dark-theme);
+  @include mat.all-component-themes(m3-theme.$dark-theme);
   --md-ref-typeface-plain: "Google Sans", sans-serif;
-  --on-primary-container: mat.get-theme-color($theme, on-primary-container);
 }
 
 html,

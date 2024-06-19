@@ -1,5 +1,10 @@
-<div class="actions">
-    <button mat-flat-button (click)="handleAddGroup()"> <mat-icon>add</mat-icon> Add group</button>
+<div class="header">
+    <div class="title">
+        <h2>Groups</h2>
+    </div>
+    <div class="actions">
+        <button mat-flat-button (click)="handleAddGroup()"> <mat-icon>add</mat-icon> Create group</button>
+    </div>
 </div>
 <ng-container *ngrxLet="groupsState$ as groupsState">
     @if (groupsState.groupsPagination?.groups?.length === 0) {

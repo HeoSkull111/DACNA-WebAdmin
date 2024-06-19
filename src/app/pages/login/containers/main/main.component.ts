@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, type OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 
 import { MaterialModule } from 'src/app/modules/material/material.module';
 import { MatDialog } from '@angular/material/dialog';
@@ -51,7 +50,7 @@ export class LoginMainComponent implements OnInit {
     this.dialog.open(NotificationDialogComponent, {
       data: {
         title: 'Error',
-        message: response.message,
+        message: `Error: ${response.message}\n${response.error}`,
       },
     });
   };

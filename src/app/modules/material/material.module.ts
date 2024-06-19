@@ -14,6 +14,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatChipsModule } from '@angular/material/chips';
 
 const materialModules = [
   MatSidenavModule,
@@ -29,6 +31,8 @@ const materialModules = [
   MatInputModule,
   MatFormFieldModule,
   MatProgressSpinnerModule,
+  MatDividerModule,
+  MatChipsModule,
 ];
 
 @NgModule({

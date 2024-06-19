@@ -4,7 +4,12 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, of, throwError } from 'rxjs';
 
 import { environment } from '@enviroments/environment.development';
-import { LoginModel, RegisterModel, UpdateUser } from '../models/user.model';
+import {
+  LoginModel,
+  RegisterModel,
+  UpdateUser,
+  User,
+} from '../models/user.model';
 
 import { ServerResponse } from 'src/app/models/http-response.model';
 
@@ -69,10 +74,12 @@ export class UserService {
 
   registerUser(user: RegisterModel): Observable<ServerResponse> {
     const body = {
+      username: user.username,
       email: user.email,
       password: user.password,
       last_name: user.lastName,
       first_name: user.firstName,
+      phone: user.phoneNumber,
     };
 
     return this.httpClient
@@ -114,6 +121,24 @@ export class UserService {
 
     return this.httpClient
       .put<ServerResponse>(`${this.apiUrl}/user/update`, body)
+      .pipe(
+        catchError((error: HttpErrorResponse) => throwError(() => error.error))
+      );
+  }
+
+  searchUser(
+    query: string,
+    groupID: string,
+    excludedID: string[]
+  ): Observable<ServerResponse<User[]>> {
+    return this.httpClient
+      .get<ServerResponse>(
+        `${
+          this.apiUrl
+        }/user/search?group_id=${groupID}&k=${query}&e=${excludedID.join(
+          '&e='
+        )}`
+      )
       .pipe(
         catchError((error: HttpErrorResponse) => throwError(() => error.error))
       );

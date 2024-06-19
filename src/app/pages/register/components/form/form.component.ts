@@ -10,10 +10,10 @@ import {
   FormControl,
   FormGroup,
   FormGroupDirective,
-  NgForm,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from 'src/app/modules/material/material.module';
 
@@ -23,7 +23,7 @@ import { RegisterModel } from '@models/user.model';
 @Component({
   selector: 'register-form',
   standalone: true,
-  imports: [CommonModule, MaterialModule, ReactiveFormsModule],
+  imports: [CommonModule, MaterialModule, RouterModule, ReactiveFormsModule],
   templateUrl: './form.component.html',
   styleUrl: './form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -34,6 +34,11 @@ export class RegisterFormComponent implements OnInit {
 
   registerForm = new FormGroup(
     {
+      username: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+      ]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
@@ -51,6 +56,12 @@ export class RegisterFormComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(30),
       ]),
+      phoneNumber: new FormControl('', [
+        Validators.required,
+        Validators.pattern(
+          '^(\\+\\d{1,3}[- ]?)?\\(?\\d{3}\\)?[- ]?\\d{3}[- ]?\\d{4}$'
+        ),
+      ]),
     },
     { validators: passwordMatchingValidatior }
   );
@@ -60,6 +71,10 @@ export class RegisterFormComponent implements OnInit {
   isSubmitted = false;
 
   ngOnInit(): void {}
+
+  get username() {
+    return this.registerForm.get('username');
+  }
 
   get email() {
     return this.registerForm.get('email');
@@ -79,6 +94,10 @@ export class RegisterFormComponent implements OnInit {
 
   get lastName() {
     return this.registerForm.get('lastName');
+  }
+
+  get phoneNumber() {
+    return this.registerForm.get('phoneNumber');
   }
 
   passwordErrorMatcher = {
@@ -107,14 +126,24 @@ export class RegisterFormComponent implements OnInit {
     this.registerForm.markAsTouched();
 
     if (this.registerForm.valid) {
-      const { email, password, firstName, lastName } = this.registerForm.value;
+      const { username, email, password, firstName, lastName, phoneNumber } =
+        this.registerForm.value;
 
-      if (email && password && firstName && lastName) {
+      if (
+        username &&
+        email &&
+        password &&
+        firstName &&
+        lastName &&
+        phoneNumber
+      ) {
         const registerModel: RegisterModel = {
+          username,
           email,
           password,
           firstName,
           lastName,
+          phoneNumber,
         };
 
         this.register.emit(registerModel);

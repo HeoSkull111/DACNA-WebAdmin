@@ -4,6 +4,8 @@
             <members-table 
                 [members]="membersState.groupMembersPagination?.members!" 
                 (memberSelected)="handleMemberSelected($event)"
+                (memberDeleted)="handleMemberDeleted($event)"
+                [currentMember]="currentMember()"
             ></members-table>
         </div>
     </div>

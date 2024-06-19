@@ -14,6 +14,8 @@ import { StatusTableComponent } from '../../components/status-table/status-table
 import { GroupMember } from '@pages/home/models/member.model';
 import { MembersState } from '@pages/home/ngrx/members/members.state';
 import { MembersActions } from '@pages/home/ngrx/members/members.actions';
+import { CurrentMemberState } from '@pages/home/ngrx/current-member/current-member.state';
+import { toSignal } from '@angular/core/rxjs-interop';
 @Component({
   selector: 'app-status',
   standalone: true,
@@ -28,9 +30,16 @@ export class StatusComponent implements OnInit {
   members: GroupMember[] = [];
   membersState$!: Observable<MembersState>;
 
+  currentMember = toSignal(
+    this.store.select((state) => state.currentMember.currentMember)
+  );
+
   constructor(
     private router: Router,
-    private store: Store<{ members: MembersState }>
+    private store: Store<{
+      members: MembersState;
+      currentMember: CurrentMemberState;
+    }>
   ) {}
 
   ngOnInit(): void {
