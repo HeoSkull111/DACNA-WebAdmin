@@ -16,12 +16,14 @@ import { groupsReducer } from '@pages/home/ngrx/groups/groups.reducer';
 import { membersReducer } from '@pages/home/ngrx/members/members.reducer';
 import { currentMemberReducer } from '@pages/home/ngrx/current-member/current-member.reducer';
 import { userReducer } from './ngrx/user.reducer';
+import { workdayHistoryReducer } from '@pages/home/ngrx/workday-history/workday-history.reducer';
 
 // Effects
 import { GroupsEffects } from '@pages/home/ngrx/groups/groups.effects';
 import { MembersEffects } from '@pages/home/ngrx/members/members.effects';
 import { CurrentMemberEffects } from '@pages/home/ngrx/current-member/current-member.effects';
 import { UsersEffects } from './ngrx/user.effects';
+import { WorkdayHistoryEffects } from '@pages/home/ngrx/workday-history/workday-history.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -35,12 +37,14 @@ export const appConfig: ApplicationConfig = {
       members: membersReducer,
       currentMember: currentMemberReducer,
       users: userReducer,
+      workdayHistories: workdayHistoryReducer,
     }),
     provideEffects(
       GroupsEffects,
       MembersEffects,
       UsersEffects,
-      CurrentMemberEffects
+      CurrentMemberEffects,
+      WorkdayHistoryEffects
     ),
   ],
 };

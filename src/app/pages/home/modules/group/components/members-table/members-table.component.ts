@@ -22,7 +22,9 @@ import { GroupMember } from '@pages/home/models/member.model';
 export class MembersTableComponent implements OnInit {
   @Input() members: GroupMember[] = [];
   @Input() currentMember: GroupMember | null = null;
+
   @Output() memberSelected = new EventEmitter<string>();
+  @Output() memberHistorySelected = new EventEmitter<GroupMember>();
   @Output() memberDeleted = new EventEmitter<string>();
 
   ngOnInit(): void {
@@ -33,6 +35,10 @@ export class MembersTableComponent implements OnInit {
 
   selectMember(memberId: string): void {
     this.memberSelected.emit(memberId);
+  }
+
+  viewMemberHistory(member: GroupMember): void {
+    this.memberHistorySelected.emit(member);
   }
 
   deleteMember(memberId: string): void {

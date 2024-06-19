@@ -23,6 +23,7 @@ import { ComfirmDialogComponent } from 'src/app/components/comfirm-dialog/comfir
 
 // models
 import { GroupMember } from '@pages/home/models/member.model';
+import { MemberHistoryComponent } from '../../components/member-history/member-history.component';
 
 @Component({
   selector: 'group-members',
@@ -81,6 +82,18 @@ export class MembersComponent implements OnInit {
       });
 
       stateSubscription.unsubscribe();
+    });
+  }
+
+  async handleViewMemberHistory(member: GroupMember): Promise<void> {
+    this.dialog.open(MemberHistoryComponent, {
+      data: {
+        group_id: this.groupID!,
+        member: member,
+      },
+      width: '1200px',
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
     });
   }
 

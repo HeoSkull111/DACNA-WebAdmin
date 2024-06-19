@@ -16,6 +16,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const materialModules = [
   MatSidenavModule,
@@ -33,6 +36,9 @@ const materialModules = [
   MatProgressSpinnerModule,
   MatDividerModule,
   MatChipsModule,
+  MatDatepickerModule,
+  MatSelectModule,
+  MatExpansionModule,
 ];
 
 @NgModule({
