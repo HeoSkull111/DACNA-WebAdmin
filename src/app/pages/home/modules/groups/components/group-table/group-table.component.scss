@@ -19,5 +19,10 @@
 }
 
 .actions {
-  width: 150px;
+  width: 250px;
+}
+
+.actions-buttons {
+  display: flex;
+  flex-direction: row;
 }

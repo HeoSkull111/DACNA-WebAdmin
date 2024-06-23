@@ -77,4 +77,49 @@ export class GroupsService {
         })
       );
   }
+
+  updateGroup(
+    id: string,
+    name: string,
+    description: string
+  ): Observable<Group> {
+    return this.httpClient
+      .put<ServerResponse>(
+        `${this.apiUrl}/group/update`,
+        {
+          name,
+          description,
+        },
+        {
+          params: {
+            id,
+          },
+        }
+      )
+      .pipe(
+        map((res) => {
+          if (res.status !== 200) {
+            throw new Error(res.message);
+          }
+
+          return res.data as Group;
+        })
+      );
+  }
+
+  deleteGroup(id: string): Observable<void> {
+    return this.httpClient
+      .delete<ServerResponse>(`${this.apiUrl}/group/delete`, {
+        params: {
+          id,
+        },
+      })
+      .pipe(
+        map((res) => {
+          if (res.status !== 200) {
+            throw new Error(res.message);
+          }
+        })
+      );
+  }
 }

@@ -44,11 +44,38 @@ export class GroupsEffects {
       switchMap(({ name, description }) =>
         this.groupsService.addGroup(name, description)
       ),
-      map((group) => {
-        this.store.dispatch(GroupsActions.loadGroups({}));
-        return GroupsActions.addGroupSuccess({ group });
-      }),
+      switchMap((group) =>
+        of(
+          GroupsActions.loadGroups({}),
+          GroupsActions.addGroupSuccess({ group })
+        )
+      ),
       catchError((error) => of(GroupsActions.addGroupFailure({ error })))
+    );
+  });
+
+  updateGroup$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GroupsActions.updateGroup),
+      switchMap(({ group_id, name, description }) =>
+        this.groupsService.updateGroup(group_id, name, description)
+      ),
+      switchMap((group) =>
+        of(
+          GroupsActions.loadGroups({}),
+          GroupsActions.updateGroupSuccess({ group })
+        )
+      ),
+      catchError((error) => of(GroupsActions.updateGroupFailure({ error })))
+    );
+  });
+
+  deleteGroup$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GroupsActions.deleteGroup),
+      switchMap(({ group_id }) => this.groupsService.deleteGroup(group_id)),
+      switchMap(() => of(GroupsActions.loadGroups({}))),
+      catchError((error) => of(GroupsActions.deleteGroupFailure({ error })))
     );
   });
 }

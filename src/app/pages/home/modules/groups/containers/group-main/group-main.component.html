@@ -19,7 +19,10 @@
                 [groups]="groupsState.groupsPagination?.groups!" 
                 [totalGroups]="groupsState.groupsPagination?.total!"
                 [pageIndex]="groupsState.groupsPagination?.currentPage! - 1"
+                [user]="user$ | async"
                 (onGroupSelected)="handleGroupSelected($event)"
+                (onGroupEdited)="handleGroupEdited($event)"
+                (onGroupDeleted)="handleGroupDeleted($event)"
                 (onPaginate)="handleOnPaginate($event)"
             ></group-table>
         }

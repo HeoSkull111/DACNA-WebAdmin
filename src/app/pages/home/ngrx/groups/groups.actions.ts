@@ -38,4 +38,30 @@ export const GroupsActions = {
     '[Groups] Add Group Failure',
     props<{ error: string }>()
   ),
+
+  updateGroup: createAction(
+    '[Groups] Update Group',
+    props<{ group_id: string; name: string; description: string }>()
+  ),
+  updateGroupSuccess: createAction(
+    '[Groups] Update Group Success',
+    props<{ group: Group }>()
+  ),
+  updateGroupFailure: createAction(
+    '[Groups] Update Group Failure',
+    props<{ error: string }>()
+  ),
+
+  deleteGroup: createAction(
+    '[Groups] Delete Group',
+    props<{ group_id: string }>()
+  ),
+  deleteGroupSuccess: createAction(
+    '[Groups] Delete Group Success',
+    props<{ group_id: string }>()
+  ),
+  deleteGroupFailure: createAction(
+    '[Groups] Delete Group Failure',
+    props<{ error: string }>()
+  ),
 };

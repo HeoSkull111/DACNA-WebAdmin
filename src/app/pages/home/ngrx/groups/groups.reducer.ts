@@ -55,5 +55,35 @@ export const groupsReducer = createReducer(
     ...state,
     error,
     isLoading: false,
+  })),
+
+  on(GroupsActions.updateGroup, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(GroupsActions.updateGroupSuccess, (state, { group }) => ({
+    ...state,
+    currentGroup: group,
+    isLoading: false,
+  })),
+  on(GroupsActions.updateGroupFailure, (state, { error }) => ({
+    ...state,
+    error,
+    isLoading: false,
+  })),
+
+  on(GroupsActions.deleteGroup, (state) => ({
+    ...state,
+    isLoading: true,
+  })),
+  on(GroupsActions.deleteGroupSuccess, (state) => ({
+    ...state,
+    currentGroup: null,
+    isLoading: false,
+  })),
+  on(GroupsActions.deleteGroupFailure, (state, { error }) => ({
+    ...state,
+    error,
+    isLoading: false,
   }))
 );
