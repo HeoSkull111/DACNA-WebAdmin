@@ -25,6 +25,7 @@ export class MembersTableComponent implements OnInit {
 
   @Output() memberSelected = new EventEmitter<string>();
   @Output() memberHistorySelected = new EventEmitter<GroupMember>();
+  @Output() memberStatisticalSelected = new EventEmitter<GroupMember>();
   @Output() memberDeleted = new EventEmitter<string>();
 
   ngOnInit(): void {
@@ -39,6 +40,10 @@ export class MembersTableComponent implements OnInit {
 
   viewMemberHistory(member: GroupMember): void {
     this.memberHistorySelected.emit(member);
+  }
+
+  viewMemberStatistical(member: GroupMember): void {
+    this.memberStatisticalSelected.emit(member);
   }
 
   deleteMember(memberId: string): void {

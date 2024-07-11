@@ -5,7 +5,7 @@ import { Observable, map } from 'rxjs';
 import { environment } from '@enviroments/environment.development';
 
 import { ServerResponse } from '@models/http-response.model';
-import { WorkdayHistory } from '../models/workday.model';
+import { WorkdayHistory, WorkdayStatisticial } from '../models/workday.model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +14,8 @@ export class WorkdayService {
   private apiUrl = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) {}
-  getWorkdayHistory(
+
+  getWorkdayHistoryByDays(
     group_id: string,
     user_id: string,
     days: string
@@ -34,6 +35,40 @@ export class WorkdayService {
           }
 
           return res.data as WorkdayHistory[];
+        })
+      );
+  }
+
+  getWorkdayHistoryByStartAndEnd(
+    group_id: string,
+    user_id: string,
+    start?: string,
+    end?: string
+  ): Observable<WorkdayStatisticial[]> {
+    const params: any = {
+      group_id,
+      user_id,
+    };
+
+    if (start) {
+      params['begin_date'] = start;
+    }
+
+    if (end) {
+      params['end_date'] = end;
+    }
+
+    return this.httpClient
+      .get<ServerResponse>(`${this.apiUrl}/workday/statistical`, {
+        params: params,
+      })
+      .pipe(
+        map((res) => {
+          if (res.status !== 200) {
+            throw new Error(res.message);
+          }
+
+          return res.data as WorkdayStatisticial[];
         })
       );
   }

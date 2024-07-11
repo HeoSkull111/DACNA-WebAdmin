@@ -22,14 +22,16 @@
             </mat-card-content>
 
             <mat-accordion>
-              <mat-expansion-panel hideToggle>
+              <mat-expansion-panel>
                 <mat-expansion-panel-header>
                   <mat-panel-title> Workdays </mat-panel-title>
                 </mat-expansion-panel-header>
                 @for(workday of whs.workdays; track $index) {
                   <mat-card appearance="outlined" class="workday-card">
                     <mat-card-header>
-                      <mat-card-title>{{ $index + 1 }}</mat-card-title>
+                      <mat-card-title>
+                          {{ $index + 1 }}
+                      </mat-card-title>
                     </mat-card-header>
                     <mat-card-content>
                       <p>Checked in: {{ workday.check_in | date: 'dd/MM/yy HH:mm:ss'}}</p>

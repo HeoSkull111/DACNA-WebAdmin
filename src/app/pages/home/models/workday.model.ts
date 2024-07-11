@@ -23,3 +23,14 @@ export type WorkdayHistory = {
   };
   workdays: Omit<Workday, 'id'>[];
 };
+
+export type WorkdayStatisticial = {
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  date: string;
+  check_in: string;
+  check_out: string;
+  total: number;
+};

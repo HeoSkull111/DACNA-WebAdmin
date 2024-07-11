@@ -28,6 +28,7 @@
           <button mat-menu-item (click)="selectMember(element.id)">View</button>
           @if (currentMember && currentMember.role === 'owner' && currentMember.id !== element.id) {
             <button mat-menu-item (click)="viewMemberHistory(element)">History</button>
+            <button mat-menu-item (click)="viewMemberStatistical(element)">Statistical</button>
             <button mat-menu-item (click)="deleteMember(element.id)">Delete</button>
           }
         </mat-menu>

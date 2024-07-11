@@ -5,6 +5,7 @@
                 [members]="membersState.groupMembersPagination?.members!" 
                 (memberSelected)="handleMemberSelected($event)"
                 (memberHistorySelected)="handleViewMemberHistory($event)"
+                (memberStatisticalSelected)="handleViewMemberStatistical($event)"
                 (memberDeleted)="handleMemberDeleted($event)"
                 [currentMember]="currentMember()"
             ></members-table>

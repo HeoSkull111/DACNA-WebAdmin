@@ -52,7 +52,7 @@ export class MemberHistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(
-      WorkdayHistoryActions.loadWorkdayHistory({
+      WorkdayHistoryActions.loadWorkdayHistoryByDays({
         groupID: this.data.group_id,
         user_id: this.data.member.id,
         days: '3',
@@ -62,7 +62,7 @@ export class MemberHistoryComponent implements OnInit {
 
   handleValueChanged($event: string) {
     this.store.dispatch(
-      WorkdayHistoryActions.loadWorkdayHistory({
+      WorkdayHistoryActions.loadWorkdayHistoryByDays({
         groupID: this.data.group_id,
         user_id: this.data.member.id,
         days: $event,

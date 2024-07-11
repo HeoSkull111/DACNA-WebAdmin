@@ -24,6 +24,8 @@ import { MembersEffects } from '@pages/home/ngrx/members/members.effects';
 import { CurrentMemberEffects } from '@pages/home/ngrx/current-member/current-member.effects';
 import { UsersEffects } from './ngrx/user.effects';
 import { WorkdayHistoryEffects } from '@pages/home/ngrx/workday-history/workday-history.effects';
+import { workdayStatisticialReducer } from '@pages/home/ngrx/workday-statisticial/workday-statistical.reducer';
+import { WorkdayStatisticialEffects } from '@pages/home/ngrx/workday-statisticial/workday-statistical.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,13 +40,15 @@ export const appConfig: ApplicationConfig = {
       currentMember: currentMemberReducer,
       users: userReducer,
       workdayHistories: workdayHistoryReducer,
+      workdayStatisticial: workdayStatisticialReducer,
     }),
     provideEffects(
       GroupsEffects,
       MembersEffects,
       UsersEffects,
       CurrentMemberEffects,
-      WorkdayHistoryEffects
+      WorkdayHistoryEffects,
+      WorkdayStatisticialEffects
     ),
   ],
 };

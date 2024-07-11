@@ -11,13 +11,13 @@ const initialState: WorkdayHistoryState = {
 
 export const workdayHistoryReducer = createReducer(
   initialState,
-  on(WorkdayHistoryActions.loadWorkdayHistory, (state) => ({
+  on(WorkdayHistoryActions.loadWorkdayHistoryByDays, (state) => ({
     ...state,
     loading: true,
     error: '',
   })),
   on(
-    WorkdayHistoryActions.loadWorkdayHistorySuccess,
+    WorkdayHistoryActions.loadWorkdayHistoryByDaysSuccess,
     (state, { workdayHistories }) => {
       console.log('workdayHistories', workdayHistories);
 
@@ -29,10 +29,13 @@ export const workdayHistoryReducer = createReducer(
       };
     }
   ),
-  on(WorkdayHistoryActions.loadWorkdayHistoryFailure, (state, { error }) => ({
-    ...state,
-    workdayHistories: [],
-    loading: false,
-    error,
-  }))
+  on(
+    WorkdayHistoryActions.loadWorkdayHistoryByDaysFailure,
+    (state, { error }) => ({
+      ...state,
+      workdayHistories: [],
+      loading: false,
+      error,
+    })
+  )
 );

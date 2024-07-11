@@ -24,6 +24,7 @@ import { ComfirmDialogComponent } from 'src/app/components/comfirm-dialog/comfir
 // models
 import { GroupMember } from '@pages/home/models/member.model';
 import { MemberHistoryComponent } from '../../components/member-history/member-history.component';
+import { MemberStatisticalComponent } from '../../components/member-statistical/member-statistical.component';
 
 @Component({
   selector: 'group-members',
@@ -92,6 +93,19 @@ export class MembersComponent implements OnInit {
         member: member,
       },
       width: '1200px',
+      enterAnimationDuration: 300,
+      exitAnimationDuration: 300,
+    });
+  }
+
+  async handleViewMemberStatistical(member: GroupMember) {
+    this.dialog.open(MemberStatisticalComponent, {
+      data: {
+        group_id: this.groupID!,
+        member: member,
+      },
+      width: '1400px',
+      maxWidth: '1400px',
       enterAnimationDuration: 300,
       exitAnimationDuration: 300,
     });

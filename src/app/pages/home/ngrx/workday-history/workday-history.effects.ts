@@ -13,20 +13,24 @@ export class WorkdayHistoryEffects {
     private workdayService: WorkdayService
   ) {}
 
-  loadWorkdayHistory$ = createEffect(() =>
+  loadWorkdayHistoryByDays$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(WorkdayHistoryActions.loadWorkdayHistory),
+      ofType(WorkdayHistoryActions.loadWorkdayHistoryByDays),
       switchMap(({ groupID, user_id, days }) =>
-        this.workdayService.getWorkdayHistory(groupID, user_id, days).pipe(
-          map((workdayHistory) => {
-            return WorkdayHistoryActions.loadWorkdayHistorySuccess({
-              workdayHistories: workdayHistory,
-            });
-          }),
-          catchError((error) =>
-            of(WorkdayHistoryActions.loadWorkdayHistoryFailure({ error }))
+        this.workdayService
+          .getWorkdayHistoryByDays(groupID, user_id, days)
+          .pipe(
+            map((workdayHistory) => {
+              return WorkdayHistoryActions.loadWorkdayHistoryByDaysSuccess({
+                workdayHistories: workdayHistory,
+              });
+            }),
+            catchError((error) =>
+              of(
+                WorkdayHistoryActions.loadWorkdayHistoryByDaysFailure({ error })
+              )
+            )
           )
-        )
       )
     )
   );
